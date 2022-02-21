@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @ObservedObject var settingsProvider = SettingsProvider.getInstance()
+    @ObservedObject var settingsProvider = SettingsProvider.shared
     
     @Binding var isPresented: Bool
     
@@ -25,8 +25,8 @@ struct SettingsView: View {
         NavigationView {
             VStack(alignment: .leading) {
                 CustomizedText("Saturation")
-                Slider(value: $settingsProvider.saturation,
-                       in: SettingsProvider.minValue...SettingsProvider.maxValue) {
+                Slider(value: binding(for: .saturation),
+                       in: range(for: .saturation)) {
                     CustomizedText("")
                 } minimumValueLabel: {
                     CustomizedText("Low")
@@ -36,8 +36,8 @@ struct SettingsView: View {
                 .padding(.bottom)
                 
                 CustomizedText("Speed")
-                Slider(value: $settingsProvider.speed,
-                       in: SettingsProvider.minValue...SettingsProvider.maxValue) {
+                Slider(value: binding(for: .speed),
+                       in: range(for: .speed)) {
                     CustomizedText("")
                 } minimumValueLabel: {
                     CustomizedText("Slow")
@@ -64,6 +64,16 @@ struct SettingsView: View {
     private func CustomizedText(_ text: String) -> Text {
         return Text(text)
             .foregroundColor(textColor)
+    }
+    
+    private func binding(for key: SettingsProvider.DoubleSettings) -> Binding<Double> {
+        return Binding { settingsProvider.doubleSettings[key, default: key.defaultValue()] }
+                set: { settingsProvider.doubleSettings[key] = $0 }
+
+    }
+    
+    private func range(for key: SettingsProvider.DoubleSettings) -> ClosedRange<Double> {
+        return key.minValue()...key.maxValue()
     }
 }
 

@@ -6,28 +6,26 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ContentView: View {
-    @State var currentHue: Double = 0.0
+    @Environment(\.scenePhase) private var scenePhase
+    
+    @State private var currentHue: Double = 0.0
     @State var settingsPresented = false
     
-    static let colorStep = 0.001
-    static let timeStep: TimeInterval = 0.01
-    static let baseValue = 100.0
+    private static let colorStep = 0.001
+    private static let timeStep: TimeInterval = 0.01
     
-    @ObservedObject static var settingsProvider = SettingsProvider.getInstance()
+    @ObservedObject private static var settingsProvider = SettingsProvider.shared
     
-    let timer = Timer
-        .publish(every: timeStep * ContentView.baseValue / settingsProvider.speed,
-                 on: .main,
-                 in: .common)
-        .autoconnect()
+    @State private var timer = colorChangeTimer()
     
     var body: some View {
         NavigationView {
             Color(hue: currentHue,
-                  saturation: ContentView.settingsProvider.saturation / ContentView.baseValue,
-                  brightness: 100.0 / ContentView.baseValue)
+                  saturation: ContentView.normalizedValueOrDefault(for: .saturation),
+                  brightness: 1.0)
                 .edgesIgnoringSafeArea(.all)
                 .onReceive(timer) { _ in
                     currentHue = shift(hue: currentHue)
@@ -45,12 +43,36 @@ struct ContentView: View {
                 .tint(.white)
         }
         .navigationViewStyle(.stack)
-        
+        .onChange(of: scenePhase) { newValue in
+            switch(newValue) {
+            case .background, .inactive:
+                timer.upstream.connect().cancel()
+            case .active:
+                timer = ContentView.colorChangeTimer()
+            @unknown default:
+                fatalError()
+            }
+        }
+        .onChange(of: ContentView.settingsProvider.doubleSettings[.speed]) { _ in
+            timer = ContentView.colorChangeTimer()
+        }
     }
     
-    func shift(hue: Double) -> Double {
+    private func shift(hue: Double) -> Double {
         let newHue = hue + ContentView.colorStep
         return newHue > 1.0 ? 0.0 : newHue
+    }
+    
+    private static func colorChangeTimer() -> Publishers.Autoconnect<Timer.TimerPublisher> {
+        return Timer
+            .publish(every: ContentView.timeStep / normalizedValueOrDefault(for: .speed),
+                     on: .main,
+                     in: .common)
+            .autoconnect()
+    }
+    
+    private static func normalizedValueOrDefault(for key: SettingsProvider.DoubleSettings) -> Double {
+        return (ContentView.settingsProvider.doubleSettings[key] ?? key.defaultValue()) / key.baseValue()
     }
 }
 
