@@ -43,6 +43,7 @@
 /* Begin PBXFileReference section */
 		AA437CB927BD6B5200D2E252 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		AA437CBC27BD972200D2E252 /* SettingsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsProvider.swift; sourceTree = "<group>"; };
+		AA526C3727C5726A00973426 /* RGBScreen--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "RGBScreen--iOS--Info.plist"; sourceTree = "<group>"; };
 		AA9BD90827B5940A007EFB3D /* RGBScreenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBScreenApp.swift; sourceTree = "<group>"; };
 		AA9BD90927B5940A007EFB3D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		AA9BD90A27B5940B007EFB3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -92,6 +93,7 @@
 		AA9BD90227B5940A007EFB3D = {
 			isa = PBXGroup;
 			children = (
+				AA526C3727C5726A00973426 /* RGBScreen--iOS--Info.plist */,
 				AA9BD90727B5940A007EFB3D /* Shared */,
 				AA9BD91627B5940B007EFB3D /* macOS */,
 				AA9BD91F27B5940B007EFB3D /* Tests iOS */,
@@ -480,9 +482,9 @@
 				DEVELOPMENT_TEAM = LJJJNHTF88;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "RGBScreen--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
@@ -510,9 +512,9 @@
 				DEVELOPMENT_TEAM = LJJJNHTF88;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "RGBScreen--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
